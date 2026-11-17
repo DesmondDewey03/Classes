@@ -1,0 +1,30 @@
+#ifndef MOVIE_H
+#define MOVIE_H
+
+#include "Media.h"
+
+// Child class representing a movie.
+class Movie : public Media {
+ private:
+  char director[100];
+  int duration;
+  float rating;
+
+ public:
+  Movie();
+
+  // Mutators
+  void setDirector(char* newDirector);
+  void setDuration(int newDuration);
+  void setRating(float newRating);
+
+  // Accessors
+  char* getDirector();
+  int getDuration();
+  float getRating();
+
+  // Overrides Media print()
+  virtual void print();
+};
+
+#endif

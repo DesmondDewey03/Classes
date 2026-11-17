@@ -1,0 +1,27 @@
+#ifndef VIDEOGAME_H
+#define VIDEOGAME_H
+
+#include "Media.h"
+
+// Child class representing a video game.
+class VideoGame : public Media {
+ private:
+  char publisher[100];
+  float rating;
+
+ public:
+  VideoGame();
+
+  // Mutators
+  void setPublisher(char* newPublisher);
+  void setRating(float newRating);
+
+  // Accessors
+  char* getPublisher();
+  float getRating();
+
+  // Overrides Media print()
+  virtual void print();
+};
+
+#endif

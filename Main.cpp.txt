@@ -1,0 +1,291 @@
+// Media Database
+// Stores video games, movies, and music.
+// Demonstrates inheritance, polymorphism,
+// virtual functions, vectors, and dynamic memory.
+
+#include <iostream>
+#include <vector>
+#include <cstring>
+
+#include "Media.h"
+#include "VideoGame.h"
+#include "Movie.h"
+#include "Music.h"
+
+using namespace std;
+
+// Function prototypes
+void addMedia(vector<Media*>& mediaList);
+void searchMedia(vector<Media*>& mediaList);
+void deleteMedia(vector<Media*>& mediaList);
+
+int main() {
+
+  // Vector storing pointers to Media objects.
+  // Because of inheritance, this vector can hold
+  // VideoGame, Movie, and Music objects.
+  vector<Media*> mediaList;
+
+  char command[20];
+  bool running = true;
+
+  // Main command loop
+  while (running) {
+
+    cout << endl;
+    cout << "ADD, SEARCH, DELETE, QUIT: ";
+    cin >> command;
+
+    // Add new media
+    if (strcmp(command, "ADD") == 0) {
+      addMedia(mediaList);
+    }
+
+    // Search existing media
+    else if (strcmp(command, "SEARCH") == 0) {
+      searchMedia(mediaList);
+    }
+
+    // Delete media
+    else if (strcmp(command, "DELETE") == 0) {
+      deleteMedia(mediaList);
+    }
+
+    // Exit program
+    else if (strcmp(command, "QUIT") == 0) {
+      running = false;
+    }
+  }
+
+  // Before ending the program, delete every
+  // dynamically allocated object to avoid
+  // memory leaks.
+  vector<Media*>::iterator it;
+
+  for (it = mediaList.begin(); it != mediaList.end(); ++it) {
+    delete *it;
+  }
+
+  return 0;
+}
+
+// Allows the user to add a video game,
+// movie, or music item to the database.
+void addMedia(vector<Media*>& mediaList) {
+
+  char type[20];
+
+  cout << "GAME, MOVIE, MUSIC: ";
+  cin >> type;
+
+  // Add a video game object
+  if (strcmp(type, "GAME") == 0) {
+
+    // Dynamically create a VideoGame object
+    VideoGame* game = new VideoGame();
+
+    char title[100];
+    char publisher[100];
+    int year;
+    float rating;
+
+    // Gather information from user
+    cout << "Title: ";
+    cin.ignore();
+    cin.getline(title, 100);
+
+    cout << "Year: ";
+    cin >> year;
+
+    cout << "Publisher: ";
+    cin.ignore();
+    cin.getline(publisher, 100);
+
+    cout << "Rating: ";
+    cin >> rating;
+
+    // Store values in the object
+    game->setTitle(title);
+    game->setYear(year);
+    game->setPublisher(publisher);
+    game->setRating(rating);
+
+    // Add the object to the media database
+    mediaList.push_back(game);
+  }
+
+  // Add a movie object
+  else if (strcmp(type, "MOVIE") == 0) {
+
+    Movie* movie = new Movie();
+
+    char title[100];
+    char director[100];
+    int year;
+    int duration;
+    float rating;
+
+    cout << "Title: ";
+    cin.ignore();
+    cin.getline(title, 100);
+
+    cout << "Director: ";
+    cin.getline(director, 100);
+
+    cout << "Year: ";
+    cin >> year;
+
+    cout << "Duration: ";
+    cin >> duration;
+
+    cout << "Rating: ";
+    cin >> rating;
+
+    movie->setTitle(title);
+    movie->setDirector(director);
+    movie->setYear(year);
+    movie->setDuration(duration);
+    movie->setRating(rating);
+
+    // Store movie as a Media pointer
+    mediaList.push_back(movie);
+  }
+
+  // Add a music object
+  else if (strcmp(type, "MUSIC") == 0) {
+
+    Music* music = new Music();
+
+    char title[100];
+    char artist[100];
+    char publisher[100];
+    int year;
+    int duration;
+
+    cout << "Title: ";
+    cin.ignore();
+    cin.getline(title, 100);
+
+    cout << "Artist: ";
+    cin.getline(artist, 100);
+
+    cout << "Year: ";
+    cin >> year;
+
+    cout << "Duration: ";
+    cin >> duration;
+
+    cout << "Publisher: ";
+    cin.ignore();
+    cin.getline(publisher, 100);
+
+    music->setTitle(title);
+    music->setArtist(artist);
+    music->setYear(year);
+    music->setDuration(duration);
+    music->setPublisher(publisher);
+
+    // Add music object to the database
+    mediaList.push_back(music);
+  }
+}
+
+// Searches the media database by title
+// or year and prints all matching objects.
+void searchMedia(vector<Media*>& mediaList) {
+
+  char choice[10];
+
+  cout << "TITLE or YEAR? ";
+  cin >> choice;
+
+  // Search by title
+  if (strcmp(choice, "TITLE") == 0) {
+
+    char searchTitle[100];
+
+    cin.ignore();
+
+    cout << "Enter title: ";
+    cin.getline(searchTitle, 100);
+
+    vector<Media*>::iterator it;
+
+    // Compare each title in the database
+    for (it = mediaList.begin(); it != mediaList.end(); ++it) {
+
+      if (strcmp((*it)->getTitle(), searchTitle) == 0) {
+
+        // Polymorphism allows the proper
+        // child's print() function to run
+        (*it)->print();
+      }
+    }
+  }
+
+  // Search by year
+  else if (strcmp(choice, "YEAR") == 0) {
+
+    int searchYear;
+
+    cout << "Year: ";
+    cin >> searchYear;
+
+    vector<Media*>::iterator it;
+
+    // Print every object that matches
+    // the requested year
+    for (it = mediaList.begin(); it != mediaList.end(); ++it) {
+
+      if ((*it)->getYear() == searchYear) {
+        (*it)->print();
+      }
+    }
+  }
+}
+
+// Searches for media and allows the user
+// to permanently delete matching entries.
+void deleteMedia(vector<Media*>& mediaList) {
+
+  char searchTitle[100];
+
+  cin.ignore();
+
+  cout << "Title to delete: ";
+  cin.getline(searchTitle, 100);
+
+  vector<Media*>::iterator it = mediaList.begin();
+
+  // Search entire database
+  while (it != mediaList.end()) {
+
+    // Check whether the title matches
+    if (strcmp((*it)->getTitle(), searchTitle) == 0) {
+
+      char answer[10];
+
+      // Display matching object
+      (*it)->print();
+
+      // Confirm deletion
+      cout << "Delete? (YES/NO): ";
+      cin >> answer;
+
+      if (strcmp(answer, "YES") == 0) {
+
+        // Delete the object from memory
+        delete *it;
+
+        // Remove pointer from vector
+        it = mediaList.erase(it);
+      }
+      else {
+        ++it;
+      }
+    }
+    else {
+      ++it;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+#include "VideoGame.h"
+
+// Constructor initializes fields
+VideoGame::VideoGame() {
+  publisher[0] = '\0';
+  rating = 0;
+}
+
+// Stores publisher name
+void VideoGame::setPublisher(char* newPublisher) {
+  strcpy(publisher, newPublisher);
+}
+
+// Stores game rating
+void VideoGame::setRating(float newRating) {
+  rating = newRating;
+}
+
+// Returns publisher
+char* VideoGame::getPublisher() {
+  return publisher;
+}
+
+// Returns rating
+float VideoGame::getRating() {
+  return rating;
+}
+
+// Prints all video game information
+void VideoGame::print() {
+  cout << "Video Game: "
+       << title << ", "
+       << year << ", "
+       << publisher << ", Rating: "
+       << rating << "/10" << endl;
+}

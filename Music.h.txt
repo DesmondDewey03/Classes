@@ -1,0 +1,30 @@
+#ifndef MUSIC_H
+#define MUSIC_H
+
+#include "Media.h"
+
+// Child class representing a music recording.
+class Music : public Media {
+ private:
+  char artist[100];
+  int duration;
+  char publisher[100];
+
+ public:
+  Music();
+
+  // Mutators
+  void setArtist(char* newArtist);
+  void setDuration(int newDuration);
+  void setPublisher(char* newPublisher);
+
+  // Accessors
+  char* getArtist();
+  int getDuration();
+  char* getPublisher();
+
+  // Overrides Media print()
+  virtual void print();
+};
+
+#endif

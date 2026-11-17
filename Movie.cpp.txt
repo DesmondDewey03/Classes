@@ -1,0 +1,48 @@
+#include "Movie.h"
+
+// Constructor initializes fields
+Movie::Movie() {
+  director[0] = '\0';
+  duration = 0;
+  rating = 0;
+}
+
+// Sets director name
+void Movie::setDirector(char* newDirector) {
+  strcpy(director, newDirector);
+}
+
+// Sets movie duration
+void Movie::setDuration(int newDuration) {
+  duration = newDuration;
+}
+
+// Sets movie rating
+void Movie::setRating(float newRating) {
+  rating = newRating;
+}
+
+// Returns director
+char* Movie::getDirector() {
+  return director;
+}
+
+// Returns duration
+int Movie::getDuration() {
+  return duration;
+}
+
+// Returns rating
+float Movie::getRating() {
+  return rating;
+}
+
+// Displays movie information
+void Movie::print() {
+  cout << "Movie: "
+       << title << ", "
+       << director << ", "
+       << year << ", "
+       << duration << " mins, Rating: "
+       << rating << "/10" << endl;
+}

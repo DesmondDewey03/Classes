@@ -1,0 +1,48 @@
+#include "Music.h"
+
+// Constructor initializes fields
+Music::Music() {
+  artist[0] = '\0';
+  publisher[0] = '\0';
+  duration = 0;
+}
+
+// Sets artist name
+void Music::setArtist(char* newArtist) {
+  strcpy(artist, newArtist);
+}
+
+// Sets duration
+void Music::setDuration(int newDuration) {
+  duration = newDuration;
+}
+
+// Sets publisher
+void Music::setPublisher(char* newPublisher) {
+  strcpy(publisher, newPublisher);
+}
+
+// Returns artist
+char* Music::getArtist() {
+  return artist;
+}
+
+// Returns duration
+int Music::getDuration() {
+  return duration;
+}
+
+// Returns publisher
+char* Music::getPublisher() {
+  return publisher;
+}
+
+// Displays music information
+void Music::print() {
+  cout << "Music: "
+       << title << ", "
+       << artist << ", "
+       << year << ", "
+       << duration << " mins, "
+       << publisher << endl;
+}

@@ -1,0 +1,37 @@
+#ifndef MEDIA_H
+#define MEDIA_H
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+// Parent class representing any piece of media in the database.
+// Stores information that all media types share.
+class Media {
+ protected:
+  char title[100];
+  int year;
+
+ public:
+  // Constructor
+  Media();
+
+  // Virtual destructor allows proper deletion
+  // of child objects through Media pointers.
+  virtual ~Media();
+
+  // Mutator methods
+  void setTitle(char* newTitle);
+  void setYear(int newYear);
+
+  // Accessor methods
+  char* getTitle();
+  int getYear();
+
+  // Virtual print function that can be
+  // overridden by child classes.
+  virtual void print();
+};
+
+#endif

@@ -1,0 +1,36 @@
+#include "Media.h"
+
+// Default constructor
+Media::Media() {
+  title[0] = '\0';
+  year = 0;
+}
+
+// Virtual destructor
+Media::~Media() {
+}
+
+// Sets the media title
+void Media::setTitle(char* newTitle) {
+  strcpy(title, newTitle);
+}
+
+// Sets the release year
+void Media::setYear(int newYear) {
+  year = newYear;
+}
+
+// Returns the title
+char* Media::getTitle() {
+  return title;
+}
+
+// Returns the year
+int Media::getYear() {
+  return year;
+}
+
+// Generic print function
+void Media::print() {
+  cout << title << " (" << year << ")" << endl;
+}
